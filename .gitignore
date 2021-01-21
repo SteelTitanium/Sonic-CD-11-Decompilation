@@ -266,4 +266,10 @@ GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
 
+# Object files
+objects/
+
+#executable
+soniccd
+
 Ignored/
