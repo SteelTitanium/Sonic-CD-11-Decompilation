@@ -44,31 +44,30 @@ add_executable(${PROJECT_NAME} ${SONICCD_SOURCES})
 find_package(SDL2 REQUIRED)
 
 include_directories(
-	dependencies/all/theoraplay
-	${SDL2_INCLUDE_DIRS}
+  dependencies/all/theoraplay
+  ${SDL2_INCLUDE_DIRS}
+  ${THEORA_INCLUDE_DIR}
 )
 
-find_package(Vorbis)
-find_package(VorbisFile)
-find_package(Theora)
+find_package(Ogg REQUIRED)
+find_package(Vorbis REQUIRED)
+find_package(VorbisFile REQUIRED)
+find_package(Theora REQUIRED)
 
 target_link_libraries(${PROJECT_NAME}
-  SDL2
-  vorbisfile
-  vorbis
-  theoradec
-  ogg
-  pthread
+  ${SDL2_LIBRARIES}
+  ${SDL2_LIBRARY}
+  ${THEORA_LIBRARIES}
+  ${VORBIS_LIBRARIES}
+  ${VORBISFILE_LIBRARIES}
+  ${OGG_LIBRARIES}
 )
 
 if (${CMAKE_SYSTEM} MATCHES "Darwin")
-	add_framework
 	find_library(FOUNDATION Foundation)
 	include_directories(
 		${FOUNDATION}
-		${THEORA_INCLUDE_DIR}
 		dependencies/mac
 	)
 	target_link_libraries(${PROJECT_NAME} ${FOUNDATION})
 endif()
-	
