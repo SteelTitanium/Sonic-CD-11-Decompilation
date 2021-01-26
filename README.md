@@ -41,12 +41,27 @@ Even if your platform isn't supported by the official releases, you **must** buy
 ## Windows UWP (Phone, Xbox, etc.):
 * Clone the repo, then follow the instructions in the [depencencies readme for Windows](./dependencies/windows/dependencies.txt) and [depencencies readme for UWP](./dependencies/win-uwp/dependencies.txt) to setup dependencies, copy your `Data.rsdk` and `videos` folder into `SonicCDDecompUWP`, then build and deploy via the UWP Visual Studio solution
 
+## Windows via MSYS2 (64-bit Only):
+
+* Download the newest version of the MSYS2 installer from [here](https://www.msys2.org/) and install it.
+* Run the MINGW64 prompt (from the windows Start Menu/MSYS2 64-bit/MSYS2 MinGW 64-bit), when the program starts enter `pacman -Syuu` in the prompt and hit Enter. Press `Y` when it asks if you want to update packages. If it asks you to close the prompt, do so, then restart it and run the same command again. This updates the packages to their latest versions.
+* Now install the dependencies with the following command: `pacman -S make git mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2 mingw-w64-x86_64-libogg mingw-w64-x86_64-libvorbis mingw-w64-x86_64-libtheora`
+* Clone the repo with the following command: `git clone https://github.com/Rubberduckycooly/Sonic-CD-11-Decompilation.git`
+* Go into the repo you just cloned with `cd Sonic-CD-11-Decompilation`
+* Then run `make CXXFLAGS=-O2 CXX=x86_64-w64-mingw32-g++ STATIC=1 -j5` (-j switch is optional but will make building faster, it's based on the number of cores you have +1 so 8 cores wold be -j9)
+
+
 ## Mac:
 * Clone the repo, then follow the instructions in the [depencencies readme for Mac](./dependencies/mac/dependencies.txt) to setup dependencies, then build via the Xcode project
 * or grab a prebuilt executable from the releases section
 
 ## Linux:
-* Clone the repo, install your distro's SDL2, libogg, libtheora, and libvorbisfile packages, and then run `make` in the cloned repo's directory
+* To setup your build enviroment and library dependecies run the following commands:
+* Ubuntu (Mint, Pop!_OS, etc...): `sudo apt install build-essential git libsdl2-dev libvorbis-dev libogg-dev libtheora-dev`
+* Arch Linux: `sudo pacman -S base-devel git sdl2 libvorbis libogg libtheora`
+* Clone the repo with the following command: `git clone https://github.com/Rubberduckycooly/Sonic-CD-11-Decompilation.git`
+* Go into the repo you just cloned with `cd Sonic-CD-11-Decompilation`
+* Then run `make CXXFLAGS=-O2 -j5` (-j switch is optional but will make building faster, it's based on the number of cores you have +1 so 8 cores wold be -j9)
 
 ## iOS:
 * Clone the repo, then follow the instructions in the [depencencies readme for iOS](./dependencies/ios/dependencies.txt) to setup dependencies, then build via the Xcode project
@@ -76,7 +91,7 @@ A: Try turning on vsync, that worked for me (on Mac)
 A: Submit an issue in the issues tab and I'll fix/add (if possible) it as soon as I can
 
 ### Q: Will you do a decompilation for Sonic 1/Sonic 2?
-A: Maybe. it took about 2-3 years of on/off work to get this to the state it is, so doing one for Sonic 1/Sonic 2 would likely take a lot of time to do, considering so much less is known about S1&S2/RSDKv4 compared to CD/RSDKv3
+A: Yes! I've done a decompilation of RSDKv4 (the engine ver that S1/S2 run on) and it can be found [here](https://github.com/Rubberduckycooly/Sonic-1-2-2013-Decompilation)!
 
 ### Q: Will you do a decompilation for Sonic Mania?
 A: No. Mania is tons bigger and requires that I'd decompile not only how the (far more complex) RSDKv5 works, but also make all _600_+ objects work
@@ -91,6 +106,4 @@ A: No. Mania is tons bigger and requires that I'd decompile not only how the (fa
 In 2018 I started researching Christan Whitehead's 'Retro Engine' as a side project since I was bored, I started with Sonic CD (RSDKv3) since it was the most well known version that hadn't had much support, since at that time Sonic Mania's (RSDKv5) modding scene was already thriving, and eventually I expanded my range to Retro-Sonic (Retro-Sonic Engine), Sonic Nexus (RSDKv1) & Sonic 1/2 (RSDKv4), since then I have worked during spare moments to document and reverse all that I can of all versions of RSDK as it was just interesting to see how things worked under the hood or how features evolved and changed over time. Fast forward to 2020 and [Sappharad](https://github.com/Sappharad) shows me his decompilation of Sonic CD based on the Windows Phone 7 port since they'd seen my other github repositories relating to RSDK reversing. After seeing their decompilation I had the idea to start my own Sonic CD decompilation based on the PC port, with improvements and tweaks Android port, though I didn't have much time to get around to it, so the project was shelved until I had more time to work on it. in mid-December 2020, I remembered the Sonic CD decompilation that I started and finally had the time to work on it more, so after around 2 weeks of on/off working the decompilation was finally in a solid working state, though I continued tweaking it for another few weeks just to iron out all the glitches and bugs that I found. 
 
 # Contact:
-Here's some other platforms I'm more active on if more specific questions need to be asked or you just wanna check out other stuff I do
-- [Twitter](https://twitter.com/Rubberduckcooly)
-- Discord: Rubberduckycooly#6438
+you can join the [Retro Engine Modding Discord Server](https://dc.railgun.works/retroengine) for any extra questions you may need to know about the decompilation or modding it

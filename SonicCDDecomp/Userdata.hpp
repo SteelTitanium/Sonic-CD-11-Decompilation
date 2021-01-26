@@ -31,6 +31,8 @@ extern int saveRAM[SAVEDATA_MAX];
 extern Achievement achievements[ACHIEVEMENT_MAX];
 extern LeaderboardEntry leaderboard[LEADERBOARD_MAX];
 
+extern int controlMode;
+
 inline int GetGlobalVariableByName(const char *name)
 {
     for (int v = 0; v < globalVariablesCount; ++v) {
@@ -53,7 +55,7 @@ inline void SetGlobalVariableByName(const char *name, int value)
 inline bool ReadSaveRAMData()
 {
     char buffer[0x200];
-#if RETRO_PLATFORM == RETRO_OSX
+#if RETRO_PLATFORM == RETRO_OSX || RETRO_PLATFORM == RETRO_UWP
     if (!usingCWD)
         sprintf(buffer, "%s/Sdata.bin",getResourcesPath());
     else
@@ -80,7 +82,7 @@ inline bool ReadSaveRAMData()
 inline bool WriteSaveRAMData()
 {
     char buffer[0x200];
-#if RETRO_PLATFORM == RETRO_OSX
+#if RETRO_PLATFORM == RETRO_OSX || RETRO_PLATFORM == RETRO_UWP
     if (!usingCWD)
         sprintf(buffer, "%s/Sdata.bin",getResourcesPath());
     else
