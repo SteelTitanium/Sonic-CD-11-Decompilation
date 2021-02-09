@@ -42,17 +42,24 @@ add_executable(${PROJECT_NAME} ${SONICCD_SOURCES})
 
 # Find the libraries
 find_package(SDL2 REQUIRED)
-
-include_directories(
-  dependencies/all/theoraplay
-  ${SDL2_INCLUDE_DIRS}
-  ${THEORA_INCLUDE_DIR}
-)
-
 find_package(Ogg REQUIRED)
 find_package(Vorbis REQUIRED)
 find_package(VorbisFile REQUIRED)
 find_package(Theora REQUIRED)
+find_package(OpenGL)
+find_package(GLEW)
+
+include_directories(
+  dependencies/all/theoraplay
+  dependencies/all/filesystem/include
+  ${SDL2_INCLUDE_DIRS}
+  ${THEORA_INCLUDE_DIR}
+)
+
+if(GLEW_FOUND)
+  set(RETRO_USE_HWREN OFF CACHE BOOL
+      "Use the hardware renderer.")
+endif()
 
 target_link_libraries(${PROJECT_NAME}
   ${SDL2_LIBRARIES}
@@ -62,6 +69,19 @@ target_link_libraries(${PROJECT_NAME}
   ${VORBISFILE_LIBRARIES}
   ${OGG_LIBRARIES}
 )
+
+# Set GLEW stuff
+if (RETRO_USE_HWREN)
+  add_definitions(-DUSE_HW_REN)
+  include_directories(
+    ${OPENGL_INCLUDE_DIR}
+    ${GLEW_INCLUDE_DIRS}
+  )
+  target_link_libraries(${PROJECT_NAME}
+    ${OPENGL_LIBRARIES}
+    GLEW::GLEW
+  )
+endif()
 
 if (${CMAKE_SYSTEM} MATCHES "Darwin")
 	find_library(FOUNDATION Foundation)
